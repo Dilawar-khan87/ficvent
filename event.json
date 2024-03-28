@@ -1,0 +1,29 @@
+{
+  "id": "2V7DRC64TGvFRyQo9H",
+  "title": "Independence Day",
+  "description": "Sourced from predicthq.com",
+  "category": "public-holidays",
+  "labels": ["holiday", "holiday-national"],
+  "rank": 90,
+  "entities": [
+    {
+      "entity_id": "UttcwjknTKKjFmdDarvEbU",
+      "name": "Independence Day",
+      "type": "event-group",
+      "category": "public-holidays",
+      "labels": ["event-group", "holiday", "holiday-national", "recurring"]
+    }
+  ],
+  "duration": 86399,
+  "start": "2024-06-26T00:00:00Z",
+  "end": "2024-06-26T23:59:59Z",
+  "updated": "2024-01-10T23:01:32Z",
+  "first_seen": "2021-01-06T00:13:38Z",
+  "timezone": null,
+  "location": [46.869107, -18.766947],
+  "scope": "country",
+  "country": "MG",
+  "state": "active",
+  "brand_safe": true,
+  "private": false
+}
