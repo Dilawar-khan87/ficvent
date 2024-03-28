@@ -5,7 +5,7 @@ export default function SideNav() {
   return (
     <aside className='fixed top-28 ml-3 flex h-[calc(100vh-140px)] w-20 flex-col items-center gap-y-6 rounded-full bg-white py-8'>
       <Link
-        href='/dashboard'
+        href='/dashboard/events'
         className='rounded-full bg-[#F8F9FB] p-4 hover:bg-[#ECEAFF]'
       >
         <Image

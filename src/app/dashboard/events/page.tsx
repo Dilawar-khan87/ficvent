@@ -18,28 +18,54 @@ function Events() {
             </button>
           </div>
           <div>
-            <table className='w-full p-4 text-left text-sm rtl:text-right'>
-              <thead className='text-xs uppercase'>
-                <tr>
-                  <th>#</th>
-                  <th>NAME</th>
-                  <th>TIME</th>
-                  <th>DATE</th>
-                  <th>LOCATION</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[1, 2, 3, 4, 5].map((item) => (
-                  <tr key={item} className=' bg-[#F3F3F3]'>
-                    <td className='rounded-l-2xl px-6 py-4'>{item}</td>
-                    <td className='px-6 py-4'>NAME</td>
-                    <td className='px-6 py-4'>TIME</td>
-                    <td className='px-6 py-4'>DATE</td>
-                    <td className='rounded-r-2xl px-6 py-4'>LOCATION</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className='flex justify-between border-b border-[#6A6A6A]'>
+              <span className='px-6 py-4'>#</span>
+              <span className='px-6 py-4'>NAME</span>
+              <span className='px-6 py-4'>TIME</span>
+              <span className='px-6 py-4'>DATE</span>
+              <span className='px-6 py-4'>LOCATION</span>
+              <span className='px-6 py-4'>
+                <span className='h-4 w-4 p-5'></span>
+              </span>
+            </div>
+            <div className='flex w-full flex-col'>
+              {[1, 2, 3, 4, 5].map((item) => (
+                <div
+                  key={item}
+                  className='mt-4 flex items-center justify-between rounded-xl border border-[#F3F3F3] bg-white'
+                >
+                  <span className='px-6 py-4'>{item}</span>
+                  <span className='px-6 py-4'>NAME</span>
+                  <span className='px-6 py-4'>TIME</span>
+                  <span className='px-6 py-4'>DATE</span>
+                  <span className='px-6 py-4'>LOCATION</span>
+                  <div className='px-6 py-4'>
+                    <button className='flex items-center justify-center rounded-full p-2 hover:bg-[#ECEAFF]'>
+                      <Image
+                        src='/assets/icons/heart-purple.svg'
+                        alt='Menu'
+                        width={20}
+                        height={20}
+                      />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className='mt-8 flex gap-12'>
+            <div className='flex h-[130px] w-1/3 flex-col rounded-3xl bg-white p-6'>
+              <span className='text-sm text-[#797D8C]'>All Events</span>
+              <span className='text-[2rem] font-bold'>2.10k</span>
+            </div>
+            <div className='flex h-[130px] w-1/3 flex-col rounded-3xl bg-white p-6'>
+              <span className='text-sm text-[#797D8C]'>All Events</span>
+              <span className='text-[2rem] font-bold'>2.10k</span>
+            </div>
+            <div className='flex h-[130px] w-1/3 flex-col rounded-3xl bg-white p-6'>
+              <span className='text-sm text-[#797D8C]'>All Events</span>
+              <span className='text-[2rem] font-bold'>2.10k</span>
+            </div>
           </div>
         </div>
         <div className='h-screen w-1/3 overflow-auto rounded-2xl bg-white px-4 py-8'>
