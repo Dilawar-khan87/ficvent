@@ -28,30 +28,38 @@ interface EventItem {
   private: boolean
 }
 
-const initialState: EventItem[] = []
+interface EventState {
+  all: EventItem[]
+  favorites: EventItem[]
+}
+
+const initialState: EventState = {
+  all: [],
+  favorites: [],
+}
 
 const eventSlice = createSlice({
   name: 'events',
   initialState,
   reducers: {
     addEvents(state, action: PayloadAction<EventItem[]>) {
-      state.push(...action.payload)
+      state.all.push(...action.payload)
     },
-    removeEvent(state, action: PayloadAction<string>) {
-      return state.filter((item) => item.id !== action.payload)
+    addFavoriteEvent(state, action: PayloadAction<EventItem>) {
+      state.favorites.push(action.payload)
     },
     updateEvent(
       state,
       action: PayloadAction<{ id: string; updatedItem: EventItem }>
     ) {
       const { id, updatedItem } = action.payload
-      const index = state.findIndex((item) => item.id === id)
+      const index = state.all.findIndex((item) => item.id === id)
       if (index !== -1) {
-        state[index] = updatedItem
+        state.all[index] = updatedItem
       }
     },
   },
 })
 
-export const { addEvents, removeEvent, updateEvent } = eventSlice.actions
+export const { addEvents, updateEvent, addFavoriteEvent } = eventSlice.actions
 export default eventSlice.reducer

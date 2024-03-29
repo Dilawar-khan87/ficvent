@@ -2,13 +2,14 @@ import Image from 'next/image'
 import EventModal from './EventModal'
 import axiosInstance from '@/config/axiosConfig'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
-import { addEvents } from '@/lib/features/events/eventSlice'
+import { addEvents, addFavoriteEvent } from '@/lib/features/events/eventSlice'
 import { useEffect } from 'react'
 import { formattedDate, formattedTime } from '@/utils/date-time'
 
 export default function EventsTable() {
   const dispatch = useAppDispatch()
-  const events = useAppSelector((state) => state.events)
+  const events = useAppSelector((state) => state.events.all)
+  const favEvents = useAppSelector((state) => state.events.favorites)
 
   useEffect(() => {
     axiosInstance
@@ -50,12 +51,21 @@ export default function EventsTable() {
               <div className='p-4'>{formattedDate(item.start)}</div>
               <div className='p-4'>{item.country}</div>
               <div className='p-4'>
-                <button className='flex items-center justify-center rounded-full p-2 hover:bg-[#ECEAFF]'>
+                <button
+                  className='flex items-center justify-center rounded-full p-2 hover:bg-[#ECEAFF]'
+                  onClick={() => {
+                    dispatch(addFavoriteEvent(item))
+                  }}
+                >
                   <Image
-                    src='/assets/icons/heart-purple.svg'
+                    src={
+                      favEvents.some((event) => event.id === item.id)
+                        ? '/assets/icons/heart-solid-red.svg'
+                        : '/assets/icons/heart-purple.svg'
+                    }
                     alt='Favorite Event'
-                    width={20}
-                    height={20}
+                    width={18}
+                    height={18}
                   />
                 </button>
               </div>

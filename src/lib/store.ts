@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import counterReducer from '@/lib/features/counter/counterSlice'
 import eventReducer from '@/lib/features/events/eventSlice'
+import menuReducer from './features/menu/menuSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       counter: counterReducer,
       events: eventReducer,
+      menu: menuReducer,
     },
   })
 }
