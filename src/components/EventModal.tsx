@@ -1,6 +1,16 @@
 'use client'
-import { Dialog, Transition } from '@headlessui/react'
-import React, { Fragment, useState } from 'react'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { formattedDate, formattedTime } from '@/utils/date-time'
+import Image from 'next/image'
+import { useState } from 'react'
 
 export default function EventModal({
   children,
@@ -11,78 +21,56 @@ export default function EventModal({
 }) {
   let [isOpen, setIsOpen] = useState(false)
 
-  function closeModal() {
-    setIsOpen(false)
-  }
-
   function openModal(e: any) {
     if (e.target.tagName.toLowerCase() !== 'img' && 'button') {
-      setIsOpen(true)
+      setIsOpen(!isOpen)
     }
   }
-
   return (
-    <>
+    <Dialog open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
       <div
         role='button'
-        id='modal-btn'
-        onClick={openModal}
         className='mr-2 mt-4 flex items-center justify-between rounded-xl border border-[#F3F3F3] bg-white'
+        onClick={openModal}
       >
         {children}
       </div>
-
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as='div' className='relative z-10' onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
-          >
-            <div className='fixed inset-0 bg-black/25' />
-          </Transition.Child>
-
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
-              <Transition.Child
-                as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
-              >
-                <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
-                  <Dialog.Title
-                    as='h3'
-                    className='text-lg font-medium leading-6 text-gray-900'
-                  >
-                    {item.title}
-                  </Dialog.Title>
-                  <div className='mt-2'>
-                    <p className='text-sm text-gray-500'>{item.description}</p>
-                  </div>
-
-                  <div className='mt-4'>
-                    <button
-                      type='button'
-                      className='inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
+      <DialogContent>
+        <div className='flex w-full justify-between'>
+          <span className='text-[16px] font-bold text-[#1E232A]'>
+            Title: {item.title.slice(0, 10)}...
+          </span>
+          <div className='flex pr-4'>
+            <span className='text-[12px] font-bold text-[#797D8C]'>
+              {formattedDate(item.start)}
+            </span>
+            <span className='pl-2 text-[12px] font-bold text-[#797D8C]'>
+              {formattedTime(item.start)}
+            </span>
           </div>
-        </Dialog>
-      </Transition>
-    </>
+        </div>
+
+        <span className='text-[12px] font-[500] text-[#797D8C]'>
+          Category: {item.category}
+        </span>
+        <span className='text-[12px] font-[500]'>Description: </span>
+        <span className='text-[10px] font-[400] text-[#9E9E9E]'>
+          Description:{item.description}
+        </span>
+        <div className='flex-grow border-t border-gray-300'></div>
+
+        <div className=' flex justify-center border-red-500'>
+          <Image
+            src='/assets/icons/location.svg'
+            width={18}
+            height={18}
+            alt='Location'
+          />
+          <span className='pl-1 text-[14px] text-[#797D8C]'>
+            Bahria Intellectual Village
+          </span>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }

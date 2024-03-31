@@ -43,10 +43,17 @@ const eventSlice = createSlice({
   initialState,
   reducers: {
     addEvents(state, action: PayloadAction<EventItem[]>) {
-      state.all.push(...action.payload)
+      state.all = action.payload
     },
     addFavoriteEvent(state, action: PayloadAction<EventItem>) {
       state.favorites.push(action.payload)
+    },
+    removeFavEvent(state, action: PayloadAction<{ id: string }>) {
+      const idToRemove = action.payload.id
+      const updatedFavorites = state.favorites.filter(
+        (event) => event.id !== idToRemove
+      )
+      state.favorites = updatedFavorites
     },
     updateEvent(
       state,
@@ -61,5 +68,6 @@ const eventSlice = createSlice({
   },
 })
 
-export const { addEvents, updateEvent, addFavoriteEvent } = eventSlice.actions
+export const { addEvents, updateEvent, addFavoriteEvent, removeFavEvent } =
+  eventSlice.actions
 export default eventSlice.reducer

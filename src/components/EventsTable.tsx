@@ -2,7 +2,11 @@ import Image from 'next/image'
 import EventModal from './EventModal'
 import axiosInstance from '@/config/axiosConfig'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
-import { addEvents, addFavoriteEvent } from '@/lib/features/events/eventSlice'
+import {
+  addEvents,
+  addFavoriteEvent,
+  removeFavEvent,
+} from '@/lib/features/events/eventSlice'
 import { useEffect } from 'react'
 import { formattedDate, formattedTime } from '@/utils/date-time'
 
@@ -15,7 +19,7 @@ export default function EventsTable() {
     axiosInstance
       .get('/events')
       .then((data) => {
-        console.log(data.data.results)
+        // console.log(data.data.results)
         dispatch(addEvents(data.data.results))
       })
       .catch((err) => {
@@ -45,7 +49,7 @@ export default function EventsTable() {
         ) : (
           events.map((item, index) => (
             <EventModal key={item.id} item={item}>
-              <div className='p-4'>{index}</div>
+              <div className='p-4'>{1 + index}</div>
               <div className='w-56 p-4'>{item.title.slice(0, 20)}...</div>
               <div className='p-4'>{formattedTime(item.start)}</div>
               <div className='p-4'>{formattedDate(item.start)}</div>
@@ -54,7 +58,11 @@ export default function EventsTable() {
                 <button
                   className='flex items-center justify-center rounded-full p-2 hover:bg-[#ECEAFF]'
                   onClick={() => {
-                    dispatch(addFavoriteEvent(item))
+                    if (!favEvents.some((event) => event.id === item.id)) {
+                      dispatch(addFavoriteEvent(item))
+                    } else {
+                      dispatch(removeFavEvent({ id: item.id }))
+                    }
                   }}
                 >
                   <Image

@@ -17,4 +17,12 @@ const formattedDate = (dateString: string) => {
   })
 }
 
-export { formattedTime, formattedDate }
+function isFutureDate(datetimeStr: string): boolean {
+  const dt = new Date(datetimeStr)
+
+  const currentDatetime = new Date()
+
+  return dt > currentDatetime
+}
+
+export { formattedTime, formattedDate, isFutureDate }
