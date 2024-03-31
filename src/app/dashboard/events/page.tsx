@@ -2,12 +2,11 @@
 import EventMonthCard from '@/components/EventMonthCard'
 import EventsTable from '@/components/EventsTable'
 import axiosInstance from '@/config/axiosConfig'
-import { addEvents } from '@/lib/features/events/eventSlice'
 import { formattedDate, formattedTime, isFutureDate } from '@/utils/date-time'
 import { formatNumberToKFormat } from '@/utils/formatters'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '@/lib/hooks'
+import React, { useState } from 'react'
+import { useAppSelector } from '@/lib/hooks'
 import FilterPopover from '@/components/FilterPopover'
 
 function Events() {

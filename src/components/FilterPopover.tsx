@@ -28,8 +28,8 @@ function DateTimeRangePicker() {
   const [startDate, setStartDate] = useState<Date>(new Date())
   const [endDate, setEndDate] = useState<Date>(new Date())
   const [mode, setMode] = useState('start')
-  const [startTime, setStartTime] = useState<number>(1)
-  const [endTime, setEndTime] = useState<number>(24)
+  const [startTime, setStartTime] = useState<string>('1')
+  const [endTime, setEndTime] = useState<string>('24')
   const [calendarOpen, setCalendarOpen] = useState(false)
 
   const hours = []
@@ -70,7 +70,7 @@ function DateTimeRangePicker() {
     console.log('endTime', endTime)
     axiosInstance
       .get(
-        `/events?active.gte=${formatDate(startDate)}T${startTime < 10 ? '0' : ''}:00:00&active.lte=${formatDate(endDate)}T${endTime}:00:00`
+        `/events?active.gte=${formatDate(startDate)}T${parseInt(startTime, 10) < 10 ? '0' : ''}:00:00&active.lte=${formatDate(endDate)}T${endTime}:00:00`
       )
       .then((data) => {
         // console.log(data.data.results)
@@ -106,16 +106,16 @@ function DateTimeRangePicker() {
           </PopoverTrigger>
           <div className='my-2 w-[2px] bg-black'></div>
           <Select
-            onValueChange={setStartTime}
+            onValueChange={(e: string) => setStartTime(e)}
             defaultValue={startTime}
-            className='bg-[#EDEDED]'
+            // className='bg-[#EDEDED]'
           >
             <SelectTrigger className='bg-[#EDEDED] focus:outline-none focus:ring-0'>
               <SelectValue placeholder='Select a category' />
             </SelectTrigger>
             <SelectContent>
               {hours.map((hour) => (
-                <SelectItem value={hour} key={hour}>
+                <SelectItem value={`${hour}`} key={hour}>
                   {formatHour(hour)}
                 </SelectItem>
               ))}
@@ -140,14 +140,14 @@ function DateTimeRangePicker() {
           <Select
             onValueChange={setEndTime}
             defaultValue={endTime}
-            className='bg-[#EDEDED]'
+            // className='bg-[#EDEDED]'
           >
             <SelectTrigger className='bg-[#EDEDED] focus:outline-none focus:ring-0'>
               <SelectValue placeholder='Select a category' />
             </SelectTrigger>
             <SelectContent>
               {hours.map((hour) => (
-                <SelectItem value={hour} key={hour}>
+                <SelectItem value={`${hour}`} key={hour}>
                   {formatHour(hour)}
                 </SelectItem>
               ))}
@@ -159,12 +159,12 @@ function DateTimeRangePicker() {
         <Calendar
           mode='single'
           selected={mode === 'start' ? startDate : endDate}
-          onSelect={(value: Date) => {
+          onSelect={(value: any) => {
             setCalendarOpen(false)
             if (mode === 'start') {
-              setStartDate(value)
+              setStartDate(new Date(value))
             } else {
-              setEndDate(value)
+              setEndDate(new Date(value))
             }
           }}
           initialFocus
@@ -255,7 +255,7 @@ export default function FilterPopover() {
             onValueChange={(e: any) => {
               console.log('Event', e)
             }}
-            defaultValue={1}
+            defaultValue='community'
           >
             <SelectTrigger className='mt-2 focus:outline-none focus:ring-0'>
               <SelectValue placeholder='Select a category' />
